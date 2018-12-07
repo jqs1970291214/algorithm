@@ -1,2 +1,1 @@
-# For-cpp-algorithm
-For my algorithm that I should crasp;
+# 数据结构和算法练习
