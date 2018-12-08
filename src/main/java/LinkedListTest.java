@@ -6,14 +6,11 @@
  * @Version 1.0
  */
 public class LinkedListTest {
-
-
-
-
     public static void main(String[] args) {
         int[] arr = {2, 3, 4, 5, 6, 1, 2};
         LinkedNode head = LinkedNode.constructFromArrayWithoutHead(arr);
         LinkedNode.travel(head);
+        System.out.println(LinkedNode.centerNode(head).data);
         LinkedNode.travel(LinkedNode.reverse(head));
         int[] arra = {1, 1, 1};
         int[] arrb = {2, 4, 6};
@@ -21,10 +18,20 @@ public class LinkedListTest {
         LinkedNode listb = LinkedNode.constructFromArrayWithoutHead(arrb);
         LinkedNode merged = LinkedNode.merge(lista, listb);
         LinkedNode.travel(merged);
+        System.out.println(LinkedNode.centerNode(merged).data);
         LinkedNode.travel(LinkedNode.removeTheLastK(merged, 5));
+        int[] circuit = {1, 2, 3, 4, 5, 6, 7};
+        LinkedNode cirhead = LinkedNode.constructFromArrayWithoutHead(circuit);
+        LinkedNode tail = cirhead;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        System.out.println(LinkedNode.circuitEntry(cirhead) == null);
+        tail.next = cirhead;
+        System.out.println(LinkedNode.circuitEntry(cirhead).data);
+        tail.next = cirhead.next;
+        System.out.println(LinkedNode.circuitEntry(cirhead).data);
     }
-
-
 }
 class LinkedNode {
     public int data;
@@ -170,4 +177,67 @@ class LinkedNode {
         }
         return node;
     }
+
+    /**
+     * 求链表中间结点, 如果是偶数，返回第n / 2 + 1个
+     */
+    public static LinkedNode centerNode(LinkedNode node) {
+        if (node == null || node.next == null) {
+            return node;
+        }
+        if (node.next.next == null) {
+            return node.next;
+        }
+        LinkedNode slow, fast;
+        slow = fast = node;
+        while (fast != null) {
+            if (fast.next == null || fast.next.next == null) {
+                if (fast.next != null) {
+                    slow = slow.next;
+                }
+                break;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+
+        }
+        return slow;
+    }
+
+
+    /**
+     * 判断是否有环路，返回环路起点
+     */
+
+    public static LinkedNode circuitEntry(LinkedNode node) {
+        if (node == null || node.next == null) {
+            //  无环路
+            return null;
+        }
+        LinkedNode slow, fast;
+        slow = fast = node;
+        while (fast != null) {
+            slow = slow.next;
+            // 快指针到达边界，不存在环路
+            if (fast.next == null || fast.next.next == null) {
+                break;
+            }
+            fast = fast.next.next;
+            // 此时找到环路
+            if (slow == fast) {
+                // 寻找环路起点
+                slow = node;
+                // 快慢指针同步
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+
+        }
+        return null;
+    }
+
+
 }
