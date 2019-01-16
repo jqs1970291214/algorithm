@@ -40,13 +40,7 @@ public class Sort {
         }
     }
 
-    // 插入排序的改良，希尔排序O(nlogn)
-//    public static void ShellSort(int[] arr, int n) {
-//        int len = n / 2;
-//        while (len >= 1) {
-//            for (int j = len; j < )
-//        }
-//    }
+
 
     // 选择排序 选择最小的依次放在前面有序区的最后 O(n^2)
     public static void SelectSort(int[] arr, int n) {
@@ -73,11 +67,9 @@ public class Sort {
         int l = left;
         int r = right;
         while (l < r) {
-            // 为什么必须从右边开始找
             while (l < r && arr[r] >= key) {
                 r--;
             }
-
             while (l < r && arr[l] <= key) {
                 l++;
             }
@@ -91,42 +83,33 @@ public class Sort {
         qsort(arr, l + 1, right);
     }
 
-
-
-//    private static void qsort(int A[], int left, int right) {
-//        if (left >= right) {
-//            return;
-//        }
-//        // 取最左边的值作为界限，所以要从右边开始排序
-//        int key = A[left];
-//        int l = left;
-//        int r = right;
-//        while (l < r) {
-//            //直到找到小于界限值的数
-//            while (l < r && A[r] >= key) {
-//                r--;
-//            }
-//            //直到找到大于界限值的数
-//            while (l < r && A[l] <= key) {
-//                l++;
-//            }
-//            int temp = A[r];
-//            A[r] = A[l];
-//            A[l] = temp;
-//        }
-//        //左右两侧查找相遇，基数归位
-//        A[left] = A[l];
-//        A[l] = key;
-//        //从左右两侧继续查找
-//        qsort(A, left, l);
-//        qsort(A, l + 1, right);
-//    }
-
     // 快排入口
     public static int[] quicksort(int[] arr) {
         qsort(arr, 0, arr.length - 1);
         return arr;
     }
+
+
+    //希尔排序
+    public static void shellSort(int[] arr, int start, int end) {
+        int increament = end - start + 1;
+        int temp = 0;
+        do {
+            increament = increament / 3 + 1;
+            for (int i = start + increament; i < end; i++) {
+                if (arr[i - increament] > arr[i]) {
+                    temp = arr[i];
+                    int j = i - increament;
+                    do {
+                        arr[j + increament] = arr[j];
+                        j -= increament;
+                    } while(j >= start && arr[j] > temp);
+                    arr[j + increament] = temp;
+                }
+            }
+        } while (increament > 1);
+    }
+
 
     public static void main(String[] args) {
         int[] arr = {10, 7, 3, 6, 2, 5};
@@ -134,8 +117,11 @@ public class Sort {
         // InsertSort(arr, arr.length);
         // SelectSort(arr, arr.length);
 
-        int[] sorted = quicksort(arr);
-        System.out.println(sorted);
+//        int[] sorted = quicksort(arr);
+//        System.out.println(sorted);
+        shellSort(arr, 0, arr.length);
+        System.out.println(arr);
+
         System.out.println();
     }
 }
