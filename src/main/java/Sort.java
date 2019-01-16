@@ -111,6 +111,42 @@ public class Sort {
     }
 
 
+    // 归并排序
+    public static void MergeSort(int[] arr, int start, int end) {
+        if (start >= end) {
+            return;
+        } else {
+            int mid = (start + end) / 2;
+            MergeSort(arr, start, mid);
+            MergeSort(arr, mid + 1, end);
+            int[] temp = new int[end - start + 1];
+            int p = 0;
+            int i = start;
+            int j = mid + 1;
+            while(i <= mid) {
+                if (j <= end) {
+                    if (arr[i] > arr[j]) {
+                        temp[p++] = arr[j++];
+                    } else {
+                        temp[p++] = arr[i++];
+                    }
+                } else {
+                    // 将i中剩下的拷过去
+                    System.arraycopy(arr, i, temp, p, mid - i + 1);
+                    break;
+                }
+            }
+            if (j <= end) {
+                // 将j中剩下的拷过去
+                System.arraycopy(arr, j, temp, p, end - j + 1);
+            }
+            // 将temp拷回
+            System.arraycopy(temp, 0, arr, start, temp.length);
+        }
+    }
+
+
+
     public static void main(String[] args) {
         int[] arr = {10, 7, 3, 6, 2, 5};
         // BubbleSort(arr, arr.length);
@@ -119,9 +155,9 @@ public class Sort {
 
 //        int[] sorted = quicksort(arr);
 //        System.out.println(sorted);
-        shellSort(arr, 0, arr.length);
+//        shellSort(arr, 0, arr.length);
+        MergeSort(arr, 0, arr.length - 1);
         System.out.println(arr);
-
         System.out.println();
     }
 }
