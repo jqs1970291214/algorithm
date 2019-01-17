@@ -1,5 +1,11 @@
+import com.sun.scenario.effect.Merge;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.io.ObjectInputStream;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * summary
@@ -83,14 +89,39 @@ public class Sort {
         qsort(arr, l + 1, right);
     }
 
+    // 快速排序2
+    public static void qsort2(int[] arr, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int pivot = arr[r];
+        int i = l;
+        for (int j = l; j < r; j++) {
+            if (arr[j] < pivot) {
+                int temp = arr[i];
+                arr[i++] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        arr[r] = arr[i];
+        arr[i] = pivot;
+        // pivot不必参与
+        qsort2(arr, l, i - 1);
+        qsort2(arr, i + 1, r);
+    }
+
+
+
     // 快排入口
     public static int[] quicksort(int[] arr) {
-        qsort(arr, 0, arr.length - 1);
+//        qsort(arr, 0, arr.length - 1);
+        qsort2(arr, 0, arr.length - 1);
+
         return arr;
     }
 
 
-    //希尔排序
+    //希尔排序, increment迭代方法  increament = increament / 3 + 1
     public static void shellSort(int[] arr, int start, int end) {
         int increament = end - start + 1;
         int temp = 0;
@@ -123,6 +154,7 @@ public class Sort {
             int p = 0;
             int i = start;
             int j = mid + 1;
+            // 下面可以通过哨兵简化代码，在数组尾部放上MAX值，当一个数组空了之后，代码依然适用
             while(i <= mid) {
                 if (j <= end) {
                     if (arr[i] > arr[j]) {
@@ -146,6 +178,104 @@ public class Sort {
     }
 
 
+    public static void sortTime() {
+        int[] arr = new int[100000];
+        Random ra = new Random();
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = ra.nextInt(100001);
+        }
+
+        int[] arr2 = Arrays.copyOf(arr, arr.length);
+        int[] arr3 = Arrays.copyOf(arr, arr.length);
+        int[] arr4 = Arrays.copyOf(arr, arr.length);
+        int[] arr5 = Arrays.copyOf(arr, arr.length);
+
+
+        // 冒泡排序比较插入排序，数据规模比较大时，插入排序优于冒泡排序，不用做频繁的交换操作
+
+
+        long time = System.currentTimeMillis();
+        BubbleSort(arr, arr.length);
+        long time2 = System.currentTimeMillis();
+        System.out.println("bsort : " + String.valueOf(time2 - time) + "ms");
+
+        InsertSort(arr2, arr2.length);
+        long time3 = System.currentTimeMillis();
+        System.out.println("isort : " + String.valueOf(time3 - time2) + "ms");
+
+        quicksort(arr3);
+        long time4 = System.currentTimeMillis();
+        System.out.println("qsort : " + String.valueOf(time4 - time3) + "ms");
+
+        MergeSort(arr4, 0, arr.length - 1);
+        long time5 = System.currentTimeMillis();
+        System.out.println("msort : " + String.valueOf(time5 - time4) + "ms");
+
+        heapSort(arr5, arr.length);
+        long time6 = System.currentTimeMillis();
+        System.out.println("hsort : " + String.valueOf(time6 - time5) + "ms");
+    }
+
+
+    /**
+     * 堆排序，大顶堆。
+     * 构建初始堆从最后一个有子节点往前调整
+     */
+    public static void heapSort(int[] arr, int len) {
+        initHeap(arr, arr.length);
+        for (int i = 1; i < arr.length; i++) {
+            swap(arr, 0, len - i);
+            adjust(arr, 0, len - i);
+        }
+
+    }
+
+
+
+    // 初始化堆
+    public static void initHeap(int[] arr, int len) {
+        int lastHasSon = len / 2 - 1;
+        for (int i = lastHasSon; i >= 0; i--) {
+            adjust(arr, i, len);
+        }
+    }
+
+
+    public static void swap(int arr[], int i, int k) {
+        int temp = arr[i];
+        arr[i] = arr[k];
+        arr[k] = temp;
+    }
+
+    // 调整
+    public static void adjust(int[] arr, int i, int len) {
+        int node = arr[i];
+        int l, r;
+        l = r = -1;
+        if (i * 2 + 1 < len) {
+            l = arr[i * 2 + 1];
+        }
+        if (i * 2 + 2 < len) {
+            r = arr[i * 2 + 2];
+        }
+
+        if (node >= r && node >= l) {
+            return;
+        }else if (l >= r){
+            swap(arr, i, i * 2 + 1);
+            adjust(arr, i * 2 + 1, len);
+        }else {
+            swap(arr, i, i * 2 + 2);
+            adjust(arr, i * 2 + 2, len);
+        }
+
+    }
+
+
+
+
+
 
     public static void main(String[] args) {
         int[] arr = {10, 7, 3, 6, 2, 5};
@@ -156,8 +286,16 @@ public class Sort {
 //        int[] sorted = quicksort(arr);
 //        System.out.println(sorted);
 //        shellSort(arr, 0, arr.length);
-        MergeSort(arr, 0, arr.length - 1);
-        System.out.println(arr);
+//        MergeSort(arr, 0, arr.length - 1);
+//        heapSort(arr, arr.length);
+//        quicksort(arr);
+
+        sortTime();
+
+
         System.out.println();
     }
+
+
+
 }
