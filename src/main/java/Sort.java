@@ -269,7 +269,8 @@ public class Sort {
         }
 
         int[] r = new int[10];
-        for (int i = 0; i < arr.length; i++) {
+        // 为保证排序算法的稳定性，这里从后往前遍历，因为c中记录的是同一个桶内的最后位置。
+        for (int i = arr.length - 1; i >= 0; i--) {
             int index = c[arr[i]] - 1;
             r[index] = arr[i];
             --c[arr[i]];
