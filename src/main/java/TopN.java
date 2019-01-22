@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Descriptions 查找给定数据集中的最大（小）的N个数据
@@ -108,6 +109,11 @@ public class TopN {
         int[] largestTopN = findLargestTopN(arr, 3);
 
         System.out.println();
+
+
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+
     }
 }
 

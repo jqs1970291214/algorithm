@@ -360,8 +360,20 @@ public class Sort {
 
         countSort();
 
+        int[] arrr = new int[]{1, 2, 3, 4};
+
+        Arrays.sort(arrr);
+
+
+
+
+
         System.out.println();
     }
+
+
+
+
 
 
 
