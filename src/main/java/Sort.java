@@ -356,15 +356,15 @@ public class Sort {
 //        heapSort(arr, arr.length);
 //        quicksort(arr);
 
-//        sortTime();
+        sortTime();
 
-        countSort();
-
-        int[] arrr = new int[]{1, 2, 3, 4};
-
-        Arrays.sort(arrr);
-
-
+//        countSort();
+//
+//        int[] arrr = new int[]{1, 2, 3, 4};
+//
+//        Arrays.sort(arrr);
+//
+//
 
 
 
