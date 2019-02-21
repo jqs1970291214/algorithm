@@ -11,6 +11,30 @@ public class BTree {
         public Node left;
         public Node right;
     }
-    public Node tree;
+    private Node root;
 
+    public void insert(Node node) {
+        if (root == null) {
+            root = node;
+        } else {
+        }
+    }
+
+    public void remove() {
+
+    }
+
+    public Node get(int order) {
+        Node p = root;
+        while (p != null) {
+            if (order < p.data) {
+                p = p.left;
+            } else if (order > p.data) {
+                p = p.right;
+            } else {
+                return p;
+            }
+        }
+        return null;
+    }
 }
