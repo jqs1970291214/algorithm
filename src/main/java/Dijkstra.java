@@ -1,6 +1,6 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Descriptions Dijkstra 算法，使用邻接矩阵存储边
@@ -91,8 +91,14 @@ public class Dijkstra {
     }
 
 
+    static ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+
     public static void main(String[] args) {
-        new Dijkstra().initGraph().dijkstra();
+
+
+        //new Dijkstra().initGraph().dijkstra();
+
     }
 
 }
