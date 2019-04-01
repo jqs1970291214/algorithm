@@ -199,6 +199,9 @@ class LRUCache<K, V> extends LinkedHashMap<K, V> {
         }
 
         System.out.println(lruCache);
+        LinkedList ll = new LinkedList();
+
+
 
     }
 

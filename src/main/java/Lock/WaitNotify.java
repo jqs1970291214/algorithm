@@ -2,6 +2,9 @@ package Lock;
 
 import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @Descriptions
  * @Company
@@ -15,11 +18,9 @@ public class WaitNotify {
     static class Wait implements Runnable {
 
         public static volatile boolean flag = false;
-
         @Override
         public void run() {
             synchronized (WaitNotify.class) {
-
                 while (!flag) {
                     try {
                         WaitNotify.class.wait();

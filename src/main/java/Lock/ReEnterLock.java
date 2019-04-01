@@ -1,7 +1,5 @@
 package Lock;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * 可重入锁
  * descriptions
@@ -35,8 +33,6 @@ public class ReEnterLock {
         }
     }
 
-
-    public static void main(String[] args) {
-
-    }
 }
+
+

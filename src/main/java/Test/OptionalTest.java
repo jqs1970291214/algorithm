@@ -44,12 +44,23 @@ public class OptionalTest {
         hashIt(Integer.parseInt("10011111", 2));
         hashIt(Integer.parseInt("01011111", 2));
 
+        // sec1
+        String s = new String("11");
+        s.intern();
+        String s2 = "11";
+        System.out.println(s == s2);
+// sec2
+        String s3 = new String("2") + new String("2");
+        s3.intern();
+        String s4 = "22";
+        System.out.println(s3 == s4);
 
     }
 
 
     public void test() {
         System.out.println("hello world");
+
 
     }
 

@@ -74,3 +74,4 @@ class InnerClass {
 enum EnumSingleton {
     INSTANCE
 }
+
