@@ -11,7 +11,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Date 2019/1/18 18:20
  * @Version 1.0
  */
-@SuppressWarnings("Duplicates")
 public class TopN {
 
     /**
